@@ -1,0 +1,36 @@
+name: Generate document and push to doc-repo
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  doc-copy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Generate token
+        id: generate_token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.MY_GITHUB_APP_ID }}
+          private_key: ${{ secrets.MY_GITHUB_APP_PRIVATE_KEY }}
+      - name: Generate document
+        run: |
+          apt update
+          apt install doxygen graphviz
+          doxygen
+      - name: Git push document
+        uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
+        env:
+          API_TOKEN_GITHUB: ${{ steps.generate_token.outputs.token }}
+        with:
+          source_file: "docs/"
+          destination_repo: "cct-watanabe/test2"
+          destination_folder: "./"
+          destination_branch: "main"
+          user_email: "action@github.com"
+          user_name: "action-user"
+          commit_message: ${{ steps.setup_description.outputs.content }}
