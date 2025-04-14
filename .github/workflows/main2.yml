@@ -1,4 +1,4 @@
-name: Generate document and push to doc-repo
+name: Generate document and push to another-repo
 
 on:
   push:
@@ -11,12 +11,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Generate token
-        id: generate_token
-        uses: tibdex/github-app-token@v1
-        with:
-          app_id: ${{ secrets.MY_GITHUB_APP_ID }}
-          private_key: ${{ secrets.MY_GITHUB_APP_PRIVATE_KEY }}
       - name: Generate document
         run: |
           apt update
@@ -25,10 +19,10 @@ jobs:
       - name: Git push document
         uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
         env:
-          API_TOKEN_GITHUB: ${{ steps.generate_token.outputs.token }}
+          API_TOKEN_GITHUB: ${{ secrets.GITHUB_IO_REPO_DEPLOY_KEY }}
         with:
           source_file: "docs/"
-          destination_repo: "cct-watanabe/test2"
+          destination_repo: "p"
           destination_folder: "./"
           destination_branch: "main"
           user_email: "action@github.com"
