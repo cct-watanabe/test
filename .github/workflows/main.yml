@@ -1,5 +1,8 @@
 name: auto-generate-document
-on: [push]
+on:
+  push:
+    branches:
+      - main
 jobs:
   generate-document:
     runs-on: ubuntu-latest
