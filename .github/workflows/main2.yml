@@ -25,11 +25,12 @@ jobs:
           chmod 600 ~/deploy_key.pem
           git config --global user.email "action@github.com"
           git config --global user.name "action-user"
-          cd docs
-          git config remote.origin.url "git@github.com:cct-watanabe/test2.git"
+          git pull git@github.com:cct-watanabe/test2.git
+          mv doc/ test2/
 
       - name: Push Document to doc-repo
         run: |
+          cd test2
           if [[ -n "$(git status --porcelain)" ]]; then
             git commit -m "${{ steps.setup_description.outputs.content }}"
             git push origin main
