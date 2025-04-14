@@ -1,0 +1,24 @@
+name: auto-generate-document
+on: [push]
+jobs:
+  generate-document:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v4
+
+    - name: install doxygen
+      run: |
+        apt update
+        apt install doxygen graphviz
+
+    - name: generate document
+      run: doxygen
+
+    - name: git push
+      run: |
+        git config user.name  "action-user"
+        git config user.email "action@github.com"
+        git add docs/
+        git commit -m "document自動生成"
+        git push
