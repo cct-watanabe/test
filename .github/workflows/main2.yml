@@ -34,7 +34,7 @@ jobs:
           cd test2
           if [[ -n "$(git status --porcelain)" ]]; then
             git add .
-            git commit -m "${{ steps.setup_description.outputs.content }}"
+            git commit -m "ドキュメント自動生成"
             git push origin main
           else
             echo "no changes, skip push"
