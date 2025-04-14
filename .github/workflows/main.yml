@@ -20,7 +20,7 @@ jobs:
 
     - name: git push
       run: |
-        if [[ -n "$(git status --porcelain)" ]]; then
+        if [[ -n "$(git status --porcelain docs/)" ]]; then
           git config user.name  "action-user"
           git config user.email "action@github.com"
           git add docs/
