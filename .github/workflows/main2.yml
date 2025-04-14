@@ -27,7 +27,7 @@ jobs:
           git config --global user.email "action@github.com"
           git config --global user.name "action-user"
           git clone git@github.com:cct-watanabe/test2.git
-          mv doc/ test2/
+          mv docs/ test2/
 
       - name: Push Document to doc-repo
         run: |
