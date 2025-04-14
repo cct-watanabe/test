@@ -9,8 +9,8 @@ jobs:
 
     - name: install doxygen
       run: |
-        apt update
-        apt install doxygen graphviz
+        sudo apt update
+        sudo apt install doxygen graphviz
 
     - name: generate document
       run: doxygen
