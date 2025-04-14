@@ -27,6 +27,7 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           cd ../
           git clone git@github.com:cct-watanabe/test2.git
+          rm -r test2/docs
           mv ${GITHUB_WORKSPACE}/docs test2/
 
       - name: Push Document to doc-repo
