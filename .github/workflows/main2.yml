@@ -29,6 +29,7 @@ jobs:
           git config --global user.name "action-user"
           cd ../
           git clone git@github.com:cct-watanabe/test2.git
+          echo $(ls -al)
           mv issues-operation/docs/ test2/
 
       - name: Push Document to doc-repo
