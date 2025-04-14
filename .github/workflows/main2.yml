@@ -37,7 +37,7 @@ jobs:
             git config --global user.email "action@github.com"
             git config --global user.name "action-user"
             git add .
-            git commit -m "${{ github.head_ref }} ドキュメント自動生成"
+            git commit -m "${{ github.ref_name }} ドキュメント自動生成"
             git push origin main
           else
             echo "no changes, skip push"
