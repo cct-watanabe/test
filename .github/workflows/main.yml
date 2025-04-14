@@ -20,7 +20,6 @@ jobs:
 
     - name: git push
       run: |
-        git diff --exit-code docs/
         git config user.name  "action-user"
         git config user.email "action@github.com"
         git add docs/
