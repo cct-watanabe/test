@@ -21,8 +21,8 @@ jobs:
         env:
           REPO_DEPLOY_KEY: ${{ secrets.REPO_DEPLOY_KEY }}
         run: |
-          echo "$REPO_DEPLOY_KEY" > ~/deploy_key.pem
-          chmod 600 ~/deploy_key.pem
+          echo "$REPO_DEPLOY_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
           git config --global user.email "action@github.com"
           git config --global user.name "action-user"
           git pull git@github.com:cct-watanabe/test2.git
