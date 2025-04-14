@@ -1,4 +1,4 @@
-name: Generate document and push to another-repo
+name: Generate document and push to doc-repo
 
 on:
   push:
@@ -16,15 +16,21 @@ jobs:
           sudo apt update
           sudo apt install doxygen graphviz
           doxygen
-      - name: Git push document
-        uses: dmnemec/copy_file_to_another_repo_action@v1.1.1
+      - name: Setup git repogitories
         env:
-          API_TOKEN_GITHUB: ${{ secrets.REPO_DEPLOY_KEY }}
-        with:
-          source_file: "docs/"
-          destination_repo: "p"
-          destination_folder: "./"
-          destination_branch: "main"
-          user_email: "action@github.com"
-          user_name: "action-user"
-          commit_message: ${{ steps.setup_description.outputs.content }}
+          REPO_DEPLOY_KEY: ${{ secrets.REPO_DEPLOY_KEY }}
+        run: |
+          echo "$REPO_DEPLOY_KEY" > ~/deploy_key.pem
+          chmod 600 ~/deploy_key.pem
+          git config --global user.email "action@github.com"
+          git config --global user.name "action-user"
+          cd docs
+          git config remote.origin.url "git@github.com:cct-watanabe/test2.git"
+          git checkout main
+      - name: Push Document to doc-repo
+        run: |
+          if ! git diff --cached --quiet; then
+            git commit -m "${{ steps.setup_description.outputs.content }}"
+            git pull origin main
+            git push origin main
+          fi
