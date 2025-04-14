@@ -16,6 +16,7 @@ jobs:
           sudo apt update
           sudo apt install doxygen graphviz
           doxygen
+
       - name: Setup git repogitories
         env:
           REPO_DEPLOY_KEY: ${{ secrets.REPO_DEPLOY_KEY }}
@@ -27,10 +28,13 @@ jobs:
           cd docs
           git config remote.origin.url "git@github.com:cct-watanabe/test2.git"
           git checkout main
+          git pull origin main
+
       - name: Push Document to doc-repo
         run: |
-          if ! git diff --cached --quiet; then
+          if [[ -n "$(git status --porcelain)" ]]; then
             git commit -m "${{ steps.setup_description.outputs.content }}"
-            git pull origin main
             git push origin main
+          else
+            echo "no changes, skip push"
           fi
