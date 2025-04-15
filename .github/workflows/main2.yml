@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   doc-copy:
     runs-on: ubuntu-latest
@@ -27,7 +30,9 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           cd /home/runner/work/
           git clone git@github.com:cct-watanabe/test2.git
-          rm -r /home/runner/work/test2/docs
+          if [ -e /home/runner/work/test2/docs ]; then
+            rm -r /home/runner/work/test2/docs
+          fi
           mv ${GITHUB_WORKSPACE}/docs /home/runner/work/test2/
 
       - name: Push Document to doc-repo
